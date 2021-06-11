@@ -49,17 +49,20 @@ export const fetchSmurfs = () => {
 	};
 };
 
-const reducto = {
-	ADD_SMURF,
-	addSmurf,
-	SET_ERROR,
-	setError,
-	FETCH_SMURF_START,
-	fetchSmurfStart,
-	FETCH_SMURF_SUCCESS,
-	fetchSmurfSuccess,
-	FETCH_SMURF_FAIL,
-	fetchSmurfFail,
-}
+export const reducto = (dispatch) => {
+	return {
+		addSmurf: data => dispatch(addSmurf(data)),
+		setError: data => dispatch(setError(data)),
+		fetchSmurfStart: () => dispatch(fetchSmurfStart()),
+		fetchSmurfSuccess: data => dispatch(fetchSmurfSuccess(data)),
+		fetchSmurfFail: data => dispatch(fetchSmurfFail(data)),
+	}
+};
 
-export default reducto;
+export const actionTypes = {
+	ADD_SMURF,
+	SET_ERROR,
+	FETCH_SMURF_START,
+	FETCH_SMURF_SUCCESS,
+	FETCH_SMURF_FAIL,
+}

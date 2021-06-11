@@ -1,4 +1,4 @@
-import act from '../actions';
+import {actionTypes as act} from '../actions';
 
 export const initialState = {
 	smurfs: [],

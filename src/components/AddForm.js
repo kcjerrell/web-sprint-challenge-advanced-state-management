@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import act from "../actions";
+import { reducto } from "../actions";
 
 const initialFormState = {
     name: "",
@@ -12,8 +12,9 @@ const initialFormState = {
 
 const AddForm = () => {
     const [formState, setFormState] = useState(initialFormState);
-    const dispatch = useDispatch();
     const errorMessage = useSelector(state => state.errorMessage);
+
+    const { setError, addSmurf } = reducto(useDispatch());
 
     const handleChange = e => {
         setFormState({
@@ -25,11 +26,11 @@ const AddForm = () => {
     const handleSubmit = e => {
         e.preventDefault();
         if (formState.name === "" || formState.position === "" || formState.nickname === "") {
-            dispatch(act.setError("Name, position and nickname fields are required."));
+            setError("Name, position and nickname fields are required.");
         }
         else {
             const newSmurf = { ...formState };
-            dispatch(act.addSmurf(newSmurf))
+            addSmurf(newSmurf);
             setFormState(initialFormState);
         }
     }
