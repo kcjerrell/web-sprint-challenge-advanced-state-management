@@ -1,16 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
+
 import Smurf from './Smurf';
 
-const SmurfList = (props) => {
-    const { isLoading, smurfs } = props;
-    // const testSmurf = {
-    //     id: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
-    //     name: 'Poppa Smurf',
-    //     position: 'Village Leader',
-    //     nickname: 'Pops',
-    //     description: 'Papa is the practical village leader and the father figure of 100 or so young Smurfs. He is easily identified by his red Smurf hat, pants, and a shortly-trimmed white beard and moustache.'
-    // }
+const SmurfList = () => {
+    const { isLoading, smurfs } = useSelector(state => {
+        return {
+            smurfs: state.smurfs,
+            isLoading: state.isLoading,
+        }
+    });
 
     if (isLoading) {
         return <h1>Loading...</h1>;
@@ -23,14 +22,18 @@ const SmurfList = (props) => {
     );
 }
 
-const mapStateToProps = state => {
-    return {
-        smurfs: state.smurfs,
-        isLoading: state.isLoading,
-    };
-};
+/*  I don't connect() because it's like this tiny little footnote that says:
+    "Hey, the thing I'm exporting is completely different than the thing I just defined!"
 
-export default connect(mapStateToProps)(SmurfList);
+    Plus I don't like the way you end up with actionCreators in the module scope, but you don't use them
+    (IE: you've imported doThisThang(), but if you want to do that thang, you have to call props.doThisThang().
+     The original doThisThang() just hangs around, cluttering the namespace, and doesn't actually do any thang
+     at all.)
+
+     So I'm a take it out.
+*/
+//export default connect(mapStateToProps)(SmurfList);
+export default SmurfList;
 
 //Task List:
 //1. Connect the smurfs and loading state values to the SmurfList component.

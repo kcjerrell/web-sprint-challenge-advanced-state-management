@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 
 import act from "../actions";
 
@@ -10,8 +10,10 @@ const initialFormState = {
     description: ""
 }
 
-const AddForm = (props) => {
+const AddForm = () => {
     const [state, setState] = useState(initialFormState);
+    const dispatch = useDispatch();
+    const errorMessage = useSelector(state => state.errorMessage);
 
     const handleChange = e => {
         setState({
@@ -23,11 +25,11 @@ const AddForm = (props) => {
     const handleSubmit = e => {
         e.preventDefault();
         if (state.name === "" || state.position === "" || state.nickname === "") {
-            props.dispatch(act.setError("Name, position and nickname fields are required."));
+            dispatch(act.setError("Name, position and nickname fields are required."));
         }
         else {
             const newSmurf = { ...state };
-            props.dispatch(act.addSmurf(newSmurf))
+            dispatch(act.addSmurf(newSmurf))
             setState(initialFormState);
         }
     }
@@ -54,20 +56,14 @@ const AddForm = (props) => {
                 <textarea onChange={handleChange} value={state.description} name="description" id="description" />
             </div>
             {
-                props.errorMessage && <div data-testid="errorAlert" className="alert alert-danger" role="alert">Error: {props.errorMessage}</div>
+                errorMessage && <div data-testid="errorAlert" className="alert alert-danger" role="alert">Error: {errorMessage}</div>
             }
             <button>Submit Smurf</button>
         </form>
     </section>);
 }
 
-const mapStateToProps = state => {
-    return {
-        errorMessage: state.errorMessage,
-    };
-};
-
-export default connect(mapStateToProps)(AddForm);
+export default AddForm;
 
 //Task List:
 //1. Connect the errorMessage, setError and addSmurf actions to the AddForm component.
