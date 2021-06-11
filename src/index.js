@@ -1,16 +1,28 @@
+// Library imports
 import React from "react";
 import ReactDOM from "react-dom";
+// import { BrowserRouter as Router } from "react-router-dom";
+import { applyMiddleware, createStore } from "redux";
+import { Provider } from 'react-redux';
+import thunk from "redux-thunk";
+import logger from "redux-logger"
 
+// Project imports
 import "./index.css";
 import App from "./App";
+import reducer from "./reducers";
 
 const { worker } = require('./mocks/browser');
 worker.start();
 
+const store = createStore(reducer, applyMiddleware(logger, thunk));
+
 const rootElement = document.getElementById("root");
 
 ReactDOM.render(
-    <App />, 
+    <Provider store={store}>
+        <App />
+    </Provider>,
     rootElement
 );
 
