@@ -27,8 +27,8 @@ const mapStateToProps = state => {
     return {
         smurfs: state.smurfs,
         isLoading: state.isLoading,
-    }
-}
+    };
+};
 
 export default connect(mapStateToProps)(SmurfList);
 

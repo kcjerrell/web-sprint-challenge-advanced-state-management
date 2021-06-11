@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { act } from 'react-dom/test-utils';
+// import { act } from 'react-dom/test-utils';
 
 //Task List:
 //1. Add a thunk action called fetchSmurfs that triggers a loading status display in our application, performs an
@@ -45,7 +45,6 @@ export const fetchSmurfs = () => {
 		catch (error) {
 			console.log(error);
 			dispatch(fetchSmurfFail(error));
-			dispatch(setError(error));
 		}
 	};
 };

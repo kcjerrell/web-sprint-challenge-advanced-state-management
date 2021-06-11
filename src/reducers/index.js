@@ -9,27 +9,31 @@ export const initialState = {
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
 		case act.ADD_SMURF:
+			const newSmurf = { ...action.payload, id: state.smurfs.length + 1 };
 			return {
 				...state,
-				smurfs: [...state.smurfs, action.payload],
+				smurfs: [...state.smurfs, newSmurf],
 			};
+
 		case act.SET_ERROR:
 			return {
 				...state,
 				errorMessage: action.payload,
 			};
+
 		case act.FETCH_SMURF_START:
 			return {
 				...state,
 				isLoading: true,
 			};
+
 		case act.FETCH_SMURF_SUCCESS:
-			console.log('there are smufs right here');
 			return {
 				...state,
 				isLoading: false,
 				smurfs: [...state.smurfs, ...action.payload],
 			};
+
 		case act.FETCH_SMURF_FAIL:
 			return {
 				...state,
