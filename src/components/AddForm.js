@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import act from "../actions";
 
@@ -11,49 +11,47 @@ const initialFormState = {
 }
 
 const AddForm = () => {
-    const [state, setState] = useState(initialFormState);
+    const [formState, setFormState] = useState(initialFormState);
     const dispatch = useDispatch();
     const errorMessage = useSelector(state => state.errorMessage);
 
     const handleChange = e => {
-        setState({
-            ...state,
+        setFormState({
+            ...formState,
             [e.target.name]: e.target.value
         });
     }
 
     const handleSubmit = e => {
         e.preventDefault();
-        if (state.name === "" || state.position === "" || state.nickname === "") {
+        if (formState.name === "" || formState.position === "" || formState.nickname === "") {
             dispatch(act.setError("Name, position and nickname fields are required."));
         }
         else {
-            const newSmurf = { ...state };
+            const newSmurf = { ...formState };
             dispatch(act.addSmurf(newSmurf))
-            setState(initialFormState);
+            setFormState(initialFormState);
         }
     }
-
-    //const errorMessage = "";
 
     return (<section>
         <h2>Add Smurf</h2>
         <form onSubmit={handleSubmit}>
             <div className="form-group">
                 <label htmlFor="name">Name:</label><br />
-                <input onChange={handleChange} value={state.name} name="name" id="name" />
+                <input onChange={handleChange} value={formState.name} name="name" id="name" />
             </div>
             <div className="form-group">
                 <label htmlFor="position">Position:</label><br />
-                <input onChange={handleChange} value={state.position} name="position" id="position" />
+                <input onChange={handleChange} value={formState.position} name="position" id="position" />
             </div>
             <div className="form-group">
                 <label htmlFor="nickname">Nickname:</label><br />
-                <input onChange={handleChange} value={state.nickname} name="nickname" id="nickname" />
+                <input onChange={handleChange} value={formState.nickname} name="nickname" id="nickname" />
             </div>
             <div className="form-group">
                 <label htmlFor="description">Description:</label><br />
-                <textarea onChange={handleChange} value={state.description} name="description" id="description" />
+                <textarea onChange={handleChange} value={formState.description} name="description" id="description" />
             </div>
             {
                 errorMessage && <div data-testid="errorAlert" className="alert alert-danger" role="alert">Error: {errorMessage}</div>
